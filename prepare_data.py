@@ -30,7 +30,8 @@ def build_tfrecord(raw_data_path, save_tfrecord_path, spm_model, min_length, n_c
     with open(raw_data_path, 'r', encoding='utf8') as f:
         print('reading lines')
         lines = f.readlines()
-        lines = ['丨' + json.loads(line)[0] + '丨' for line in tqdm(lines)]
+        lines = ['丨' + json.loads(line.rstrip('\n'))[0] + '丨' for line in tqdm(lines)]
+	print(lines)
         lines = [line for line in lines if len(line) > min_length]
     if not os.path.exists(save_tfrecord_path):
         os.makedirs(save_tfrecord_path)
